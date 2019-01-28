@@ -39,8 +39,8 @@ public class Robot extends TimedRobot {
     oi = new OI();
 
     startConfig.setDefaultOption("None", false);
-    startConfig.addOption("Panel", false);
-    startConfig.addOption("Cargo", true);
+    startConfig.addOption("Panel", true);
+    startConfig.addOption("Cargo", false);
     SmartDashboard.putData("Starting Gamepiece", startConfig);
   }
 
@@ -83,8 +83,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    RobotMap.panelExtend.set(true);
-    RobotMap.panelGrip.set(!startConfig.getSelected());
+    if (startConfig.getSelected()) {
+      RobotMap.panelRaise.set(true);
+      RobotMap.panelExtend.set(true);
+      RobotMap.panelGrip.set(false);
+    }
+    else
+      RobotMap.panelExtend.set(true);
+    
     driveTrain.setReverseFront(startConfig.getSelected());
   }
 

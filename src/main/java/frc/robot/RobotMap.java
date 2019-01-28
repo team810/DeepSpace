@@ -62,7 +62,7 @@ public class RobotMap {
     panelExtend = new Solenoid(PortNumbers.PANEL_EXTEND);
     panelExtend.set(false);
     panelGrip = new Solenoid(PortNumbers.PANEL_GRAB);
-    panelGrip.set(false);
+    panelGrip.set(true);
 
     leftEnc = new Encoder(PortNumbers.LEFT_ENCODER_A, PortNumbers.LEFT_ENCODER_B);
     rightEnc = new Encoder(PortNumbers.RIGHT_ENCODER_A, PortNumbers.RIGHT_ENCODER_B);

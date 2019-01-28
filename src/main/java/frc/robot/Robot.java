@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    RobotMap.panelGrip.set(true);
     if (startConfig.getSelected()) {
       RobotMap.panelRaise.set(true);
       RobotMap.panelExtend.set(true);

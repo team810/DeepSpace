@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.CargoOut;
 import frc.robot.commands.ContinueClimb;
 import frc.robot.commands.EnterFrame;
@@ -21,7 +22,7 @@ import frc.robot.commands.SwitchFront;
  */
 public class OI {
   public Joystick left, right, gamepad;
-  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive;
+  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto;
 
   public OI() {
     left = new Joystick(PortNumbers.LEFT_JOYSTICK);
@@ -44,5 +45,17 @@ public class OI {
 
     miniDrive = new JoystickButton(left, 1);
     miniDrive.whileHeld(new MiniDrive());
+
+    stopAuto = new JoystickButton(gamepad, 10);
+
+    //SmartDashboard Values
+    SmartDashboard.putNumber("Max Speed", 0);
+    SmartDashboard.putNumber("Max Acceleration", 0);
+    SmartDashboard.putNumber("Max Jerk", 0);
+    SmartDashboard.putNumber("kP", 0);
+    SmartDashboard.putNumber("kI", 0);
+    SmartDashboard.putNumber("kD", 0);
+    SmartDashboard.putNumber("kA", 0);
+    SmartDashboard.putNumber("Turn kP", 0);
   }
 }

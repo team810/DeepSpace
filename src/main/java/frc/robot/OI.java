@@ -15,6 +15,9 @@ import frc.robot.commands.ContinueClimb;
 import frc.robot.commands.EnterFrame;
 import frc.robot.commands.MiniDrive;
 import frc.robot.commands.SwitchFront;
+import frc.robot.commands.autonomous.GetCargo;
+import frc.robot.commands.autonomous.GetPanel;
+import frc.robot.commands.autonomous.PlacePanel;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,7 +25,7 @@ import frc.robot.commands.SwitchFront;
  */
 public class OI {
   public Joystick left, right, gamepad;
-  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto;
+  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto, getCargo, getPanel, placePanel;
 
   public OI() {
     left = new Joystick(PortNumbers.LEFT_JOYSTICK);
@@ -47,6 +50,15 @@ public class OI {
     miniDrive.whileHeld(new MiniDrive());
 
     stopAuto = new JoystickButton(gamepad, 10);
+
+    getCargo = new JoystickButton(gamepad, 3);
+    getCargo.whenPressed(new GetCargo());
+
+    getPanel = new JoystickButton(gamepad, 2);
+    getPanel.whenPressed(new GetPanel());
+
+    placePanel = new JoystickButton(gamepad, 6);
+    placePanel.whenPressed(new PlacePanel());
 
     //SmartDashboard Values
     SmartDashboard.putNumber("Max Speed", 0);

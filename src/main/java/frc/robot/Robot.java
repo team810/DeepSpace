@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,6 +25,7 @@ import frc.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static DriveTrain driveTrain;
+  public static UsbCamera cargoCam;
 
   SendableChooser<Boolean> startConfig;
 
@@ -36,8 +39,10 @@ public class Robot extends TimedRobot {
 
     driveTrain = new DriveTrain();
 
+    cargoCam = CameraServer.getInstance().startAutomaticCapture("Cargo Camera", 0);
     oi = new OI();
 
+    startConfig = new SendableChooser<Boolean>();
     startConfig.setDefaultOption("None", false);
     startConfig.addOption("Panel", true);
     startConfig.addOption("Cargo", false);
@@ -92,7 +97,7 @@ public class Robot extends TimedRobot {
     else
       RobotMap.panelExtend.set(true);
     
-    driveTrain.setReverseFront(startConfig.getSelected());
+    driveTrain.setReverseFront(!startConfig.getSelected());
   }
 
   /**

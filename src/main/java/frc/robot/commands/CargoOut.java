@@ -14,12 +14,9 @@ public class CargoOut extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CargoOut(boolean rocketShip) {
-    addSequential(new SetSolenoid(RobotMap.cargoRamp, !rocketShip));
-    addSequential(new Wait(.2));
-    addSequential(new SetSolenoid(RobotMap.cargoHold, false));
-    addSequential(new Wait(5));
+  public CargoOut() {
     addSequential(new SetSolenoid(RobotMap.cargoHold, true));
-    addSequential(new SetSolenoid(RobotMap.cargoRamp, false));
+    addSequential(new Wait(5));
+    addSequential(new SetSolenoid(RobotMap.cargoHold, false));
   }
 }

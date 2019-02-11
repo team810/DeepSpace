@@ -15,9 +15,12 @@ import frc.robot.commands.ContinueClimb;
 import frc.robot.commands.EnterFrame;
 import frc.robot.commands.MiniDrive;
 import frc.robot.commands.SwitchFront;
+import frc.robot.commands.ToggleSolenoid;
+import frc.robot.commands.autonomous.DriveToTarget;
 import frc.robot.commands.autonomous.GetCargo;
 import frc.robot.commands.autonomous.GetPanel;
 import frc.robot.commands.autonomous.PlacePanel;
+import frc.robot.commands.autonomous.TurnToTarget;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -26,19 +29,20 @@ import frc.robot.commands.autonomous.PlacePanel;
 public class OI {
   public Joystick left, right, gamepad;
   public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto, getCargo, getPanel, placePanel;
+  public JoystickButton solenoid1, solenoid2, solenoid3;
 
   public OI() {
     left = new Joystick(PortNumbers.LEFT_JOYSTICK);
     right = new Joystick(PortNumbers.RIGHT_JOYSTICK);
     gamepad = new Joystick(PortNumbers.GAMEPAD);
-
+    
     switchFront = new JoystickButton(right, 2);
     switchFront.whenPressed(new SwitchFront());
 
     cargo_rocketship = new JoystickButton(gamepad, 1);
-    cargo_rocketship.whenPressed(new CargoOut(true));
+    cargo_rocketship.whenPressed(new ToggleSolenoid(RobotMap.cargoRamp));
     cargo_cargoship = new JoystickButton(gamepad, 4);
-    cargo_cargoship.whenPressed(new CargoOut(false));
+    cargo_cargoship.whenPressed(new CargoOut());
 
     climb = new JoystickButton(left, 2);
     climb.whenPressed(new ContinueClimb());
@@ -69,5 +73,17 @@ public class OI {
     SmartDashboard.putNumber("kD", 0);
     SmartDashboard.putNumber("kA", 0);
     SmartDashboard.putNumber("Turn kP", 0);
+    
+    SmartDashboard.putBoolean("Targets Seen", true);
+    SmartDashboard.putNumber("Angle To Center", 0);
+    SmartDashboard.putNumber("Offset Angle", 0);
+    SmartDashboard.putNumber("Distance", 0);
+    SmartDashboard.putData("Turn to Target", new TurnToTarget());
+    SmartDashboard.putData("Drive to Target", new DriveToTarget());
+    
+    solenoid1 = new JoystickButton(gamepad, 5);
+    solenoid1.whenPressed(new ToggleSolenoid(RobotMap.panelGrip));
+    solenoid2 = new JoystickButton(gamepad, 7);
+    solenoid2.whenPressed(new ToggleSolenoid(RobotMap.panelRaise));
   }
 }

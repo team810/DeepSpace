@@ -27,6 +27,11 @@ public class Wait extends TimedCommand {
   protected void initialize() {
   }
 
+  @Override
+  protected boolean isFinished() {
+    return super.isFinished();
+  }
+
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {

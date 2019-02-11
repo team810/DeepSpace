@@ -29,11 +29,10 @@ public class PortNumbers {
     public static final int CLIMB_PCM = 1;
 
     //Climbing PCM
-    public static final int CLIMB_AIR_CONTROL = 0;
     public static final int CLIMB_FRONT_FORWARD = 1;
     public static final int CLIMB_FRONT_REVERSE = 2;
-    public static final int CLIMB_BACK_FORWARD = 3;
-    public static final int CLIMB_BACK_REVERSE = 4;
+    public static final int CLIMB_BACK_FORWARD = 4;
+    public static final int CLIMB_BACK_REVERSE = 3;
 
     //Main PCM
     public static final int CARGO_RAMP = 0;

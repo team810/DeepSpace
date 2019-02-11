@@ -24,12 +24,18 @@ public class MiniDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double f = Robot.oi.right.getRawAxis(1);
-    if (Math.abs(f) < .2)
-      f = 0;
-    f *= .5;
-    RobotMap.miniDrive.set(f);
-    Robot.driveTrain.arcadeDrive(f, 0);
+    double mini = -Robot.oi.right.getRawAxis(1);
+    double main = -Robot.oi.left.getRawAxis(1);
+
+    if (Math.abs(main) < .2)
+      main = 0;
+    if (Math.abs(mini) < .2)
+      mini = 0;
+
+    mini *= .25;
+    main *= .75;
+    RobotMap.miniDrive.set(mini);
+    Robot.driveTrain.arcadeDrive(main, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

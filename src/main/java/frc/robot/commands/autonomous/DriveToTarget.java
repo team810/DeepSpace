@@ -48,7 +48,7 @@ public class DriveToTarget extends Command {
       return;
     }
 
-    Robot.driveTrain.setReverseFront(true);
+    Robot.driveTrain.setReverseFront(false);
     RobotMap.navX.reset();
     Waypoint[] points = new Waypoint[2];
     points[0] = new Waypoint(0, 0, 0);

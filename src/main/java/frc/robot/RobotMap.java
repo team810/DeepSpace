@@ -28,7 +28,7 @@ public class RobotMap {
 
   public static Spark frontL, frontR, backL, backR, miniDrive;
   public static DoubleSolenoid climbF, climbR;
-  public static Solenoid climbControl, cargoRamp, cargoHold, panelRaise, panelExtend, panelGrip;
+  public static Solenoid cargoRamp, cargoHold, panelRaise, panelExtend, panelGrip;
   public static Encoder leftEnc, rightEnc;
   public static AHRS navX;
   public static DifferentialDrive drive;
@@ -45,28 +45,29 @@ public class RobotMap {
 
     miniDrive = new Spark(PortNumbers.MINI_DRIVE);
 
-    climbF = new DoubleSolenoid(PortNumbers.CLIMB_FRONT_FORWARD, PortNumbers.CLIMB_FRONT_REVERSE);
+    climbF = new DoubleSolenoid(PortNumbers.CLIMB_PCM, PortNumbers.CLIMB_FRONT_FORWARD, PortNumbers.CLIMB_FRONT_REVERSE);
     climbF.set(Value.kReverse);
-    climbR = new DoubleSolenoid(PortNumbers.CLIMB_BACK_FORWARD, PortNumbers.CLIMB_BACK_REVERSE);
+    climbR = new DoubleSolenoid(PortNumbers.CLIMB_PCM, PortNumbers.CLIMB_BACK_FORWARD, PortNumbers.CLIMB_BACK_REVERSE);
     climbR.set(Value.kReverse);
-    climbControl = new Solenoid(PortNumbers.CLIMB_AIR_CONTROL);
-    climbControl.set(false);
 
-    cargoRamp = new Solenoid(PortNumbers.CARGO_RAMP);
+    cargoRamp = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.CARGO_RAMP);
     cargoRamp.set(false);
-    cargoHold = new Solenoid(PortNumbers.CARGO_HOLD);
+    cargoHold = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.CARGO_HOLD);
     cargoHold.set(false);
 
-    panelRaise = new Solenoid(PortNumbers.PANEL_RAISE);
+    panelRaise = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.PANEL_RAISE);
     panelRaise.set(false);
-    panelExtend = new Solenoid(PortNumbers.PANEL_EXTEND);
+    panelExtend = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.PANEL_EXTEND);
     panelExtend.set(false);
-    panelGrip = new Solenoid(PortNumbers.PANEL_GRAB);
+    panelGrip = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.PANEL_GRAB);
     panelGrip.set(false);
 
     leftEnc = new Encoder(PortNumbers.LEFT_ENCODER_A, PortNumbers.LEFT_ENCODER_B);
     rightEnc = new Encoder(PortNumbers.RIGHT_ENCODER_A, PortNumbers.RIGHT_ENCODER_B);
+    AutoPutData.addNumber("Left Encoder", leftEnc::get);
+    AutoPutData.addNumber("Right Encoder", rightEnc::get);
 
     navX = new AHRS(I2C.Port.kMXP);
+    AutoPutData.addNumber("NavX", navX::getAngle);
   }
 }

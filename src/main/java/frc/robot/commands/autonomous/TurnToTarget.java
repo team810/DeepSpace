@@ -57,7 +57,7 @@ public class TurnToTarget extends Command {
   protected void execute() {
     Robot.driveTrain.arcadeDrive(0, pid.get());
     
-    if (pid.onTarget())
+    if (Math.abs(RobotMap.navX.getAngle() - pid.getSetpoint()) <= 1)
       count++;
     else
       count = 0;

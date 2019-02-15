@@ -54,10 +54,10 @@ public class OI {
     miniDrive.whileHeld(new MiniDrive());
 
     stopAuto = new JoystickButton(gamepad, 10);
-
+/*
     getCargo = new JoystickButton(gamepad, 3);
     getCargo.whenPressed(new GetCargo());
-
+*/
     getPanel = new JoystickButton(gamepad, 2);
     getPanel.whenPressed(new GetPanel());
 
@@ -80,10 +80,10 @@ public class OI {
     SmartDashboard.putNumber("Distance", 0);
     SmartDashboard.putData("Turn to Target", new TurnToTarget());
     SmartDashboard.putData("Drive to Target", new DriveToTarget());
-    
+/*    
     solenoid1 = new JoystickButton(gamepad, 5);
     solenoid1.whenPressed(new ToggleSolenoid(RobotMap.panelGrip));
     solenoid2 = new JoystickButton(gamepad, 7);
-    solenoid2.whenPressed(new ToggleSolenoid(RobotMap.panelRaise));
+    solenoid2.whenPressed(new ToggleSolenoid(RobotMap.panelRaise)); */
   }
 }

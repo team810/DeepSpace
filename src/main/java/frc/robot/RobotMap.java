@@ -9,6 +9,8 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
@@ -32,6 +34,7 @@ public class RobotMap {
   public static Encoder leftEnc, rightEnc;
   public static AHRS navX;
   public static DifferentialDrive drive;
+  public static DigitalInput limitSwitch;
 
   public static void init() {
     frontL = new Spark(PortNumbers.FRONT_LEFT);
@@ -62,12 +65,14 @@ public class RobotMap {
     panelGrip = new Solenoid(PortNumbers.MAIN_PCM, PortNumbers.PANEL_GRAB);
     panelGrip.set(false);
 
-    leftEnc = new Encoder(PortNumbers.LEFT_ENCODER_A, PortNumbers.LEFT_ENCODER_B);
-    rightEnc = new Encoder(PortNumbers.RIGHT_ENCODER_A, PortNumbers.RIGHT_ENCODER_B);
+    leftEnc = new Encoder(PortNumbers.LEFT_ENCODER_A, PortNumbers.LEFT_ENCODER_B, false, CounterBase.EncodingType.k4X);
+    rightEnc = new Encoder(PortNumbers.RIGHT_ENCODER_A, PortNumbers.RIGHT_ENCODER_B, true, CounterBase.EncodingType.k4X);
     AutoPutData.addNumber("Left Encoder", leftEnc::get);
     AutoPutData.addNumber("Right Encoder", rightEnc::get);
 
     navX = new AHRS(I2C.Port.kMXP);
     AutoPutData.addNumber("NavX", navX::getAngle);
+
+    //limitSwitch = new DigitalInput(PortNumbers.LIMIT_SWITCH);
   }
 }

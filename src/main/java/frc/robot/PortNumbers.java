@@ -46,5 +46,5 @@ public class PortNumbers {
     public static final int LEFT_ENCODER_B = 1;
     public static final int RIGHT_ENCODER_A = 2;
     public static final int RIGHT_ENCODER_B = 3;
-
+    public static final int LIMIT_SWITCH = 4;
 }

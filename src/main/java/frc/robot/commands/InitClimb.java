@@ -15,8 +15,8 @@ public class InitClimb extends CommandGroup {
    * Add your docs here.
    */
   public InitClimb() {
-    addSequential(new SetSolenoid(RobotMap.climbF, true));
-    //addSequential(new Wait(.5));
     addSequential(new SetSolenoid(RobotMap.climbR, true));
+    addSequential(new Wait(.04));
+    addSequential(new SetSolenoid(RobotMap.climbF, true));
   }
 }

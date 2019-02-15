@@ -9,6 +9,7 @@ package frc.robot.commands.autonomous;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -45,7 +46,7 @@ public class TurnToTarget extends Command {
     RobotMap.navX.reset();
     target = SmartDashboard.getNumber("Angle To Center", 0);
     pid.setInputRange(-180, 180);
-    pid.setOutputRange(-.7, .7);
+    pid.setOutputRange(-.95, .95);
     pid.setContinuous(true);
     pid.setSetpoint(target);
     pid.setAbsoluteTolerance(1);
@@ -57,16 +58,17 @@ public class TurnToTarget extends Command {
   protected void execute() {
     Robot.driveTrain.arcadeDrive(0, pid.get());
     
-    if (Math.abs(RobotMap.navX.getAngle() - pid.getSetpoint()) <= 1)
+    if (Math.abs(RobotMap.navX.getAngle() - pid.getSetpoint()) <= 3)
       count++;
     else
       count = 0;
+    DriverStation.reportWarning("Count: " + count, false);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return invalid || count > 10 || Robot.oi.stopAuto.get();
+    return invalid || (count > 10) || Robot.oi.stopAuto.get();
   }
 
   // Called once after isFinished returns true

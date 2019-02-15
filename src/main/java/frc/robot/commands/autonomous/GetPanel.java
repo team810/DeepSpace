@@ -17,8 +17,8 @@ public class GetPanel extends CommandGroup {
    * Add your docs here.
    */
   public GetPanel() {
-    addSequential(new TurnToTarget());
-    addSequential(new DriveToTarget());
+    //addSequential(new TurnToTarget());
+    //addSequential(new DriveToTarget());
     addSequential(new SetSolenoid(RobotMap.panelRaise, true));
     addSequential(new SetSolenoid(RobotMap.panelGrip, false));
   }

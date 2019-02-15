@@ -24,7 +24,9 @@ public class MiniDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double mini = -Robot.oi.right.getRawAxis(1);
+    /*if (!RobotMap.limitSwitch.get())
+      return; */
+    double mini = Robot.oi.right.getRawAxis(1);
     double main = -Robot.oi.left.getRawAxis(1);
 
     if (Math.abs(main) < .2)

@@ -17,8 +17,8 @@ public class PlacePanel extends CommandGroup {
    * Add your docs here.
    */
   public PlacePanel() {
-    addSequential(new TurnToTarget());
-    addSequential(new DriveToTarget());
+    //addSequential(new TurnToTarget());
+    //addSequential(new DriveToTarget());
     addSequential(new SetSolenoid(RobotMap.panelGrip, true));
     addSequential(new SetSolenoid(RobotMap.panelRaise, false));
   }

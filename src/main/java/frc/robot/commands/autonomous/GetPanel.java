@@ -11,15 +11,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.SetSolenoid;
+import frc.robot.commands.Wait;
 
 public class GetPanel extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GetPanel() {
-    //addSequential(new TurnToTarget());
-    //addSequential(new DriveToTarget());
+  public GetPanel(boolean manual) {
+    if (!manual) {
+      addSequential(new TurnToTarget());
+      addSequential(new DriveToTarget());
+    }
     addSequential(new SetSolenoid(RobotMap.panelRaise, true));
+    addSequential(new Wait(.35));
     addSequential(new SetSolenoid(RobotMap.panelGrip, false));
   }
 

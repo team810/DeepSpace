@@ -28,8 +28,7 @@ import frc.robot.commands.autonomous.TurnToTarget;
  */
 public class OI {
   public Joystick left, right, gamepad;
-  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto, getCargo, getPanel, placePanel;
-  public JoystickButton solenoid1, solenoid2, solenoid3;
+  public JoystickButton switchFront, cargo_rocketship, cargo_cargoship, climb, retractPanel, miniDrive, stopAuto, getCargo, getPanelManual, placePanelManual, getPanelAuto, placePanelAuto;
 
   public OI() {
     left = new Joystick(PortNumbers.LEFT_JOYSTICK);
@@ -54,20 +53,26 @@ public class OI {
     miniDrive.whileHeld(new MiniDrive());
 
     stopAuto = new JoystickButton(gamepad, 10);
-/*
+
     getCargo = new JoystickButton(gamepad, 3);
     getCargo.whenPressed(new GetCargo());
-*/
-    getPanel = new JoystickButton(gamepad, 2);
-    getPanel.whenPressed(new GetPanel());
 
-    placePanel = new JoystickButton(gamepad, 6);
-    placePanel.whenPressed(new PlacePanel());
+    getPanelManual = new JoystickButton(gamepad, 5);
+    getPanelManual.whenPressed(new GetPanel(true));
+
+    placePanelManual = new JoystickButton(gamepad, 7);
+    placePanelManual.whenPressed(new PlacePanel(true));
+
+    getPanelAuto = new JoystickButton(gamepad, 6);
+    getPanelAuto.whenPressed(new GetPanel(false));
+
+    placePanelAuto = new JoystickButton(gamepad, 8);
+    placePanelAuto.whenPressed(new PlacePanel(false));
 
     //SmartDashboard Values
-    SmartDashboard.putNumber("Max Speed", 0);
-    SmartDashboard.putNumber("Max Acceleration", 0);
-    SmartDashboard.putNumber("Max Jerk", 0);
+    SmartDashboard.putNumber("Max Speed", 133.5);
+    SmartDashboard.putNumber("Max Acceleration", 72);
+    SmartDashboard.putNumber("Max Jerk", 1800);
     SmartDashboard.putNumber("kP", 0);
     SmartDashboard.putNumber("kI", 0);
     SmartDashboard.putNumber("kD", 0);
@@ -75,6 +80,8 @@ public class OI {
     SmartDashboard.putNumber("Turn kP", 0);
     
     SmartDashboard.putBoolean("Targets Seen", true);
+
+    
     SmartDashboard.putNumber("Angle To Center", 0);
     SmartDashboard.putNumber("Offset Angle", 0);
     SmartDashboard.putNumber("Distance", 0);

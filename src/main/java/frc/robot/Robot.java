@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.GrabInitialPanel;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -25,7 +26,7 @@ import frc.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot {
   public static OI oi;
   public static DriveTrain driveTrain;
-  public static UsbCamera cargoCam;
+  public static UsbCamera cargoCam, panelCam;
 
   SendableChooser<Boolean> startConfig;
 
@@ -40,6 +41,7 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrain();
 
     cargoCam = CameraServer.getInstance().startAutomaticCapture("Cargo Camera", 0);
+    panelCam = CameraServer.getInstance().startAutomaticCapture("Panel Camera", 1);
     oi = new OI();
 
     startConfig = new SendableChooser<Boolean>();
@@ -90,14 +92,12 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     RobotMap.panelGrip.set(true);
     if (startConfig.getSelected()) {
-      RobotMap.panelRaise.set(true);
-      RobotMap.panelExtend.set(true);
-      RobotMap.panelGrip.set(false);
+      new GrabInitialPanel().start();
     }
     else
       RobotMap.panelExtend.set(true);
     
-    driveTrain.setReverseFront(!startConfig.getSelected());
+    driveTrain.setReverseFront(startConfig.getSelected());
   }
 
   /**

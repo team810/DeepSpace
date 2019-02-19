@@ -22,14 +22,14 @@ import jaci.pathfinder.modifiers.TankModifier;
 public class DriveToTarget extends Command {
 
   private boolean invalid = false;
-  private double maxSpeed = 0,
-    maxAccel = 0,
-    maxJerk = 0,
-    kP = 0,
-    kI = 0,
-    kD = 0,
+  private final double maxSpeed = 133.5,
+    maxAccel = 72,
+    maxJerk = 1800,
+    kP = .55,
+    kI = .0015,
+    kD = .002,
     kA = 0,
-    turnkP = 0,
+    turnkP = .0053,
     wheelBase = 22,
     wheelDiameter = 6;
   
@@ -48,24 +48,15 @@ public class DriveToTarget extends Command {
       return;
     }
 
-    Robot.driveTrain.setReverseFront(false);
+    Robot.driveTrain.setReverseFront(true);
     RobotMap.navX.reset();
     Waypoint[] points = new Waypoint[2];
     points[0] = new Waypoint(0, 0, 0);
-    points[1] = new Waypoint(SmartDashboard.getNumber("Distance", 0), 0, Pathfinder.d2r(SmartDashboard.getNumber("Offset Angle", 0)));
-
-    maxSpeed = SmartDashboard.getNumber("Max Speed", 0);
-    maxAccel = SmartDashboard.getNumber("Max Acceleration", 0);
-    maxJerk = SmartDashboard.getNumber("Max Jerk", 0);
-    kP = SmartDashboard.getNumber("kP", 0);
-    kI = SmartDashboard.getNumber("kI", 0);
-    kD = SmartDashboard.getNumber("kD", 0);
-    kA = SmartDashboard.getNumber("kA", 0);
-    turnkP = SmartDashboard.getNumber("Turn kP", 0);
+    points[1] = new Waypoint(SmartDashboard.getNumber("Distance", 0), 0, -Pathfinder.d2r(SmartDashboard.getNumber("Offset Angle", 0)));
 
     Trajectory traj;
     try {
-      Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, .05, maxSpeed, maxAccel, maxJerk);
+      Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, .02, maxSpeed, maxAccel, maxJerk);
       traj = Pathfinder.generate(points, config);
     } catch (Exception e) {
       DriverStation.reportError("Error generating trajectory", false);
@@ -75,10 +66,10 @@ public class DriveToTarget extends Command {
 
     TankModifier tank = new TankModifier(traj).modify(wheelBase);
     leftFollower = new EncoderFollower(tank.getLeftTrajectory());
-    leftFollower.configureEncoder(RobotMap.leftEnc.get(), 360, wheelDiameter);
+    leftFollower.configureEncoder(RobotMap.rightEnc.get(), 360, wheelDiameter);
     leftFollower.configurePIDVA(kP, kI, kD, 1/maxSpeed, kA);
     rightFollower = new EncoderFollower(tank.getRightTrajectory());
-    rightFollower.configureEncoder(RobotMap.rightEnc.get(), 360, wheelDiameter);
+    rightFollower.configureEncoder(RobotMap.leftEnc.get(), 360, wheelDiameter);
     rightFollower.configurePIDVA(kP, kI, kD, 1/maxSpeed, kA);
 
     notifier = new Notifier(this::followPath);
@@ -86,15 +77,15 @@ public class DriveToTarget extends Command {
   }
 
   private void followPath() {
-    double l = leftFollower.calculate(RobotMap.leftEnc.get());
-    double r = rightFollower.calculate(RobotMap.rightEnc.get());
+    double l = leftFollower.calculate(RobotMap.rightEnc.get());
+    double r = rightFollower.calculate(RobotMap.leftEnc.get());
 
     double gyro = RobotMap.navX.getAngle();
     double desiredHeading = Pathfinder.r2d(leftFollower.getHeading());
     double headingDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyro);
     double turn = turnkP * headingDifference;
 
-    Robot.driveTrain.tankDrive(l + turn, r - turn);
+    Robot.driveTrain.tankDrive(l - turn, r + turn);
   }
 
   // Called repeatedly when this Command is scheduled to run

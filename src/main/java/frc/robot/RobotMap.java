@@ -47,6 +47,7 @@ public class RobotMap {
     drive.setSafetyEnabled(false);
 
     miniDrive = new Spark(PortNumbers.MINI_DRIVE);
+    miniDrive.setSafetyEnabled(false);
 
     climbF = new DoubleSolenoid(PortNumbers.CLIMB_PCM, PortNumbers.CLIMB_FRONT_FORWARD, PortNumbers.CLIMB_FRONT_REVERSE);
     climbF.set(Value.kReverse);

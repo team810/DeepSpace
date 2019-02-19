@@ -7,9 +7,6 @@
 
 package frc.robot.commands.autonomous;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,9 +17,9 @@ public class TurnToTarget extends Command {
 
   private PIDController pid;
   private double target;
-  private double kP = 0,
-    kI = 0,
-    kD = 0;
+  private double kP = .043,
+    kI = 1.91E-4,
+    kD = .12;
   private boolean invalid = false;
   private int count = 0;
 
@@ -33,10 +30,6 @@ public class TurnToTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    kP = SmartDashboard.getNumber("kP", 0);
-    kI = SmartDashboard.getNumber("kI", 0);
-    kD = SmartDashboard.getNumber("kD", 0);
-
     pid = new PIDController(kP, kI, kD, RobotMap.navX, a -> {});
     if (!SmartDashboard.getBoolean("Targets Seen", false)) {
       invalid = true;
@@ -62,7 +55,7 @@ public class TurnToTarget extends Command {
       count++;
     else
       count = 0;
-    DriverStation.reportWarning("Count: " + count, false);
+    //DriverStation.reportWarning("Count: " + count, false);
   }
 
   // Make this return true when this Command no longer needs to run execute()

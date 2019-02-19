@@ -37,7 +37,8 @@ public class MiniDrive extends Command {
     mini *= .25;
     main *= .75;
     RobotMap.miniDrive.set(mini);
-    Robot.driveTrain.arcadeDrive(main, 0);
+    Robot.driveTrain.arcadeDrive(mini * -2.3, 0);
+    //DriverStation.reportWarning("Mini drive: " + mini + " Main drive: " + main, false);
   }
 
   // Make this return true when this Command no longer needs to run execute()

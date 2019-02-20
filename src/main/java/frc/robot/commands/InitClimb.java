@@ -17,8 +17,8 @@ public class InitClimb extends CommandGroup {
   public InitClimb() {
     addSequential(new SetSolenoid(RobotMap.cargoRamp, false));
     addSequential(new SetSolenoid(RobotMap.panelRaise, false));
-    addSequential(new SetSolenoid(RobotMap.panelGrip, false));
-    addSequential(new SetSolenoid(RobotMap.panelExtend, false));
+    addSequential(new SetSolenoid(RobotMap.panelGrip, true));
+    addSequential(new SetSolenoid(RobotMap.panelExtend, true));
     
     addSequential(new Wait(.1));
 

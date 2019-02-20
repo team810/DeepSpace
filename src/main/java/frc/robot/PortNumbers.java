@@ -38,8 +38,8 @@ public class PortNumbers {
     public static final int CARGO_RAMP = 0;
     public static final int CARGO_HOLD = 1;
     public static final int PANEL_RAISE = 2;
-    public static final int PANEL_EXTEND = 3;
-    public static final int PANEL_GRAB = 4;
+    public static final int PANEL_EXTEND = 4;
+    public static final int PANEL_GRAB = 3;
 
     //DIO
     public static final int LEFT_ENCODER_A = 0;

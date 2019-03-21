@@ -8,6 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class GetCargo extends CommandGroup {
@@ -22,5 +23,23 @@ public class GetCargo extends CommandGroup {
   @Override
   protected boolean isFinished() {
     return super.isFinished() || Robot.oi.stopAuto.get();
+  }
+
+  @Override
+  protected void initialize() {
+    SmartDashboard.putBoolean("Teleop", false);
+    super.initialize();
+  }
+
+  @Override
+  protected void end() {
+    SmartDashboard.putBoolean("Teleop", true);
+    super.end();
+  }
+
+  @Override
+  protected void interrupted() {
+    SmartDashboard.putBoolean("Teleop", true);
+    super.interrupted();
   }
 }

@@ -68,11 +68,12 @@ public class RobotMap {
 
     leftEnc = new Encoder(PortNumbers.LEFT_ENCODER_A, PortNumbers.LEFT_ENCODER_B, false, CounterBase.EncodingType.k4X);
     rightEnc = new Encoder(PortNumbers.RIGHT_ENCODER_A, PortNumbers.RIGHT_ENCODER_B, true, CounterBase.EncodingType.k4X);
+    /*
     AutoPutData.addNumber("Left Encoder", leftEnc::get);
     AutoPutData.addNumber("Right Encoder", rightEnc::get);
-
+    */
     navX = new AHRS(I2C.Port.kMXP);
-    AutoPutData.addNumber("NavX", navX::getAngle);
+    //AutoPutData.addNumber("NavX", navX::getAngle);
 
     //limitSwitch = new DigitalInput(PortNumbers.LIMIT_SWITCH);
   }

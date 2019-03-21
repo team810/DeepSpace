@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.InstantCommand;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -31,10 +32,18 @@ public class ContinueClimb extends InstantCommand {
   // Called once when the command executes
   @Override
   protected void initialize() {
-    if (RobotMap.climbF.get() == Value.kReverse && RobotMap.climbR.get() == Value.kReverse)
-      step = new InitClimb();
-    else if (RobotMap.climbF.get() == Value.kForward)
+    if (RobotMap.climbF.get() == Value.kReverse && RobotMap.climbR.get() == Value.kReverse) {
+      if (Robot.oi.climbSafety.get() || Robot.oi.climbSafety2.get()) {
+        step = new InitClimb();
+        Robot.driveTrain.setReverseFront(false);
+      }
+    }
+    else if (RobotMap.climbF.get() == Value.kForward) {
       step = new SetSolenoid(RobotMap.climbF, false);
+      RobotMap.panelRaise.set(false);
+      RobotMap.panelExtend.set(false);
+      RobotMap.panelGrip.set(false);
+    }
     else
       step = new SetSolenoid(RobotMap.climbR, false);
 

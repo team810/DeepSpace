@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 public class GrabInitialPanel extends CommandGroup {
@@ -22,5 +23,23 @@ public class GrabInitialPanel extends CommandGroup {
     addSequential(new SetSolenoid(RobotMap.panelGrip, false));
     addSequential(new Wait(.15));
     addSequential(new SetSolenoid(RobotMap.panelExtend, true));
+  }
+
+  @Override
+  protected void initialize() {
+    SmartDashboard.putBoolean("Teleop", false);
+    super.initialize();
+  }
+
+  @Override
+  protected void end() {
+    SmartDashboard.putBoolean("Teleop", true);
+    super.end();
+  }
+
+  @Override
+  protected void interrupted() {
+    SmartDashboard.putBoolean("Teleop", true);
+    super.interrupted();
   }
 }

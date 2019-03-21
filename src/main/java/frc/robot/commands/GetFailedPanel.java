@@ -5,32 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.SetSolenoid;
 import frc.robot.commands.Wait;
 
-public class PlacePanel extends CommandGroup {
+public class GetFailedPanel extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public PlacePanel(boolean manual) {
-    if (!manual) {
-      addSequential(new TurnToTarget());
-      addSequential(new DriveToTarget());
-    }
-    addSequential(new SetSolenoid(RobotMap.panelGrip, true));
-    addSequential(new Wait(.1));
-    addSequential(new SetSolenoid(RobotMap.panelRaise, false));
+  public GetFailedPanel() {
+    addSequential(new SetSolenoid(RobotMap.panelGrip, false));
+    addSequential(new SetSolenoid(RobotMap.panelRaise, true));
+    addSequential(new Wait(.35));
   }
 
   @Override
   protected boolean isFinished() {
-    return super.isFinished() || Robot.oi.stopAuto.get();
+    return super.isFinished();
   }
 
   @Override

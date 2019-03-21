@@ -40,13 +40,16 @@ public class Robot extends TimedRobot {
 
     driveTrain = new DriveTrain();
 
+    /*
     cargoCam = CameraServer.getInstance().startAutomaticCapture("Cargo Camera", 0);
-    panelCam = CameraServer.getInstance().startAutomaticCapture("Panel Camera", 1);
+    cargoCam.setResolution(480, 360);
+    cargoCam.setFPS(15);
+    */
+    panelCam = CameraServer.getInstance().startAutomaticCapture("Panel Camera", 0);
     oi = new OI();
 
     startConfig = new SendableChooser<Boolean>();
-    startConfig.setDefaultOption("None", false);
-    startConfig.addOption("Panel", true);
+    startConfig.setDefaultOption("Panel", true);
     startConfig.addOption("Cargo", false);
     SmartDashboard.putData("Starting Gamepiece", startConfig);
   }
@@ -91,12 +94,14 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     RobotMap.panelGrip.set(true);
+    /*
     if (startConfig.getSelected()) {
       new GrabInitialPanel().start();
     }
     else
       RobotMap.panelExtend.set(true);
-    
+    */
+    new GrabInitialPanel().start();
     driveTrain.setReverseFront(startConfig.getSelected());
   }
 
